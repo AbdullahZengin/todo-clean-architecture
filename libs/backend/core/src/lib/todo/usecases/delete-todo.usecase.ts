@@ -1,7 +1,10 @@
 import { ITodoRepository } from '../todo.repository.interface';
-import { IUsecase } from '../../common/usecase.interface';
 
-export class DeleteTodoUsecase implements IUsecase<Promise<void>> {
+export interface IDeleteTodoUsecase {
+  execute(id: string): Promise<void>;
+}
+
+export class DeleteTodoUsecase implements IDeleteTodoUsecase {
   constructor(private todoRepository: ITodoRepository) {}
 
   execute(id: string): Promise<void> {

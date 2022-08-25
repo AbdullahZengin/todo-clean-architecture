@@ -1,8 +1,11 @@
 import { Todo } from '../entities/todo.entity';
 import { ITodoRepository } from '../todo.repository.interface';
-import { IUsecase } from '../../common/usecase.interface';
 
-export class UpdateTodoUsecase implements IUsecase<Promise<Todo>> {
+export interface IUpdateTodoUsecase {
+  execute(todo: Todo): Promise<Todo>;
+}
+
+export class UpdateTodoUsecase implements IUpdateTodoUsecase {
   constructor(private todoRepository: ITodoRepository) {}
 
   execute(todo: Todo): Promise<Todo> {
