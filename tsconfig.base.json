@@ -15,12 +15,10 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@anywai-workshop/presentation-core": [
-        "libs/presentation/core/src/index.ts"
-      ],
-      "@anywai-workshop/presentation-data": [
-        "libs/presentation/data/src/index.ts"
-      ]
+      "@udao/backend-core": ["libs/backend/core/src/index.ts"],
+      "@udao/backend-data": ["libs/backend/data/src/index.ts"],
+      "@udao/presentation-core": ["libs/presentation/core/src/index.ts"],
+      "@udao/presentation-data": ["libs/presentation/data/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
