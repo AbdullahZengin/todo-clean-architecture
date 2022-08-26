@@ -1,7 +1,7 @@
 import { ITodoRepository } from '../todo.repository.interface';
 
-export interface IDeleteTodoUsecase {
-  execute(id: string): Promise<void>;
+export abstract class IDeleteTodoUsecase {
+  abstract execute(id: string): Promise<void>;
 }
 
 export class DeleteTodoUsecase implements IDeleteTodoUsecase {

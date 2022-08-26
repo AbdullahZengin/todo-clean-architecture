@@ -1,8 +1,8 @@
 import { Todo } from '@udao/backend-core';
 
-export interface IDatabase {
-  getAll(): Promise<Todo[]>;
-  create(todo: Todo): Promise<Todo>;
-  delete(id: string): Promise<void>;
-  update(todo: Todo): Promise<Todo>;
+export abstract class IDatabase {
+  abstract getAll(): Promise<Todo[]>;
+  abstract create(todo: Todo): Promise<Todo>;
+  abstract delete(id: string): Promise<void>;
+  abstract update(todo: Todo): Promise<Todo>;
 }

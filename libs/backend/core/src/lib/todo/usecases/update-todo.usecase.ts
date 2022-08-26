@@ -1,8 +1,8 @@
 import { Todo } from '../entities/todo.entity';
 import { ITodoRepository } from '../todo.repository.interface';
 
-export interface IUpdateTodoUsecase {
-  execute(todo: Todo): Promise<Todo>;
+export abstract class IUpdateTodoUsecase {
+  abstract execute(todo: Todo): Promise<Todo>;
 }
 
 export class UpdateTodoUsecase implements IUpdateTodoUsecase {
