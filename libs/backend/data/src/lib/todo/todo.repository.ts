@@ -11,7 +11,7 @@ export class TodoRepository implements ITodoRepository {
     return this.database.create(todo);
   }
   delete(id: string): Promise<void> {
-    return this.delete(id);
+    return this.database.delete(id);
   }
   update(todo: Todo): Promise<Todo> {
     return this.database.update(todo);
