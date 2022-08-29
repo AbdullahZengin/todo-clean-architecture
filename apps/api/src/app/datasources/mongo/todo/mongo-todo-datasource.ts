@@ -1,11 +1,10 @@
-import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Todo } from '@udao/backend-core';
-import { IDatabase } from '@udao/backend-data';
+import { CreateTodoUsecase, Todo } from '@udao/backend-core';
+import { ITodoDatasource, TodoRepository } from '@udao/backend-data';
 import { Model } from 'mongoose';
 import { TodoDocument } from './interfaces/todo.interface';
 
-export class MongoTodoDatasource implements IDatabase {
+export class MongoTodoDatasource implements ITodoDatasource {
   constructor(
     @InjectModel('Todo') private readonly todoModel: Model<TodoDocument>
   ) {}
@@ -24,7 +23,7 @@ export class MongoTodoDatasource implements IDatabase {
 
   async update(todo: Todo): Promise<Todo> {
     const result = await this.todoModel
-      .updateOne({ id: todo.id }, { $set: { todo } })
+      .updateOne({ id: todo.id }, { $set: { ...todo } })
       .exec();
 
     if (!result) {

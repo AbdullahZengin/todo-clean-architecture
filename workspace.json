@@ -3,8 +3,10 @@
   "version": 2,
   "projects": {
     "api": "apps/api",
+    "api-interface": "libs/api-interface",
     "backend-core": "libs/backend/core",
     "backend-data": "libs/backend/data",
+    "core": "libs/core",
     "presentation-core": "libs/presentation/core",
     "presentation-data": "libs/presentation/data",
     "todo": "apps/todo",

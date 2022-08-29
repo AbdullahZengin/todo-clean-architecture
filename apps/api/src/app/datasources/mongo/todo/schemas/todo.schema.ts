@@ -5,8 +5,8 @@ export const TodoSchema = new Schema(
     id: { type: String, unique: true },
     body: String,
     status: Boolean,
-    tag: String,
-    createdDate: Date,
+    tag: { type: String, require: false },
+    createdDate: { type: Date, default: new Date() },
   },
   {
     collection: 'todo',

@@ -15,8 +15,10 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@udao/api-interface": ["libs/api-interface/src/index.ts"],
       "@udao/backend-core": ["libs/backend/core/src/index.ts"],
       "@udao/backend-data": ["libs/backend/data/src/index.ts"],
+      "@udao/core": ["libs/core/src/index.ts"],
       "@udao/presentation-core": ["libs/presentation/core/src/index.ts"],
       "@udao/presentation-data": ["libs/presentation/data/src/index.ts"]
     }

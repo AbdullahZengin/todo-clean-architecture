@@ -1,20 +1,25 @@
 import { DynamicModule, Global, Module, Provider } from '@nestjs/common';
-import { IDatabase, TodoRepository } from '@udao/backend-data';
+import { ITodoDatasource, TodoRepository } from '@udao/backend-data';
 import { MongoTodoDatasourceModule } from '../datasources/mongo/todo/mongo-todo-datasource.module';
+
 import {
   CreateTodoUsecase,
+  DeleteTodoUsecase,
   GetAllTodosUsecase,
   ICreateTodoUsecase,
-  IGetAllTodosUseCase,
+  IDeleteTodoUsecase,
+  IGetAllTodosUsecase,
   ITodoRepository,
+  IUpdateTodoUsecase,
+  UpdateTodoUsecase,
 } from '@udao/backend-core';
 
 export const PROVIDERS: Provider[] = [
   {
-    inject: [IDatabase],
+    inject: [ITodoDatasource],
     provide: ITodoRepository,
-    useFactory: (database: IDatabase) => {
-      return new TodoRepository(database);
+    useFactory: (datasource: ITodoDatasource) => {
+      return new TodoRepository(datasource);
     },
   },
   {
@@ -25,9 +30,21 @@ export const PROVIDERS: Provider[] = [
   },
   {
     inject: [ITodoRepository],
-    provide: IGetAllTodosUseCase,
+    provide: IGetAllTodosUsecase,
     useFactory: (todoRepository: ITodoRepository) =>
       new GetAllTodosUsecase(todoRepository),
+  },
+  {
+    inject: [ITodoRepository],
+    provide: IDeleteTodoUsecase,
+    useFactory: (todoRepository: ITodoRepository) =>
+      new DeleteTodoUsecase(todoRepository),
+  },
+  {
+    inject: [ITodoRepository],
+    provide: IUpdateTodoUsecase,
+    useFactory: (todoRepository: ITodoRepository) =>
+      new UpdateTodoUsecase(todoRepository),
   },
 ];
 

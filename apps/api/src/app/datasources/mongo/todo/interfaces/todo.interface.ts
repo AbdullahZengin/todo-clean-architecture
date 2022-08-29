@@ -4,6 +4,6 @@ export interface TodoDocument extends Document {
   readonly id: string;
   readonly body: string;
   readonly status: boolean;
-  readonly tag: string;
+  readonly tag?: string;
   readonly createdDate: Date;
 }

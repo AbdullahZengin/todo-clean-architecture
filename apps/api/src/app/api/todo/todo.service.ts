@@ -1,22 +1,53 @@
-import { Injectable } from '@nestjs/common';
-import { ICreateTodoUsecase, IGetAllTodosUseCase } from '@udao/backend-core';
+import {
+  BadRequestException,
+  Injectable,
+  InternalServerErrorException,
+} from '@nestjs/common';
+import { CreateTodoDto, UpdateTodoDto } from './dto/todo.dto';
+import { CreateTodoMapper, UpdateTodoMapper } from './mapper/todo.mapper';
+import {
+  GetAllTodosUsecase,
+  ICreateTodoUsecase,
+  IDeleteTodoUsecase,
+  IGetAllTodosUsecase,
+  IUpdateTodoUsecase,
+} from '@udao/backend-core';
 
 @Injectable()
 export class TodoService {
   constructor(
+    private createTodoMapper: CreateTodoMapper,
+    private updateTodoMapper: UpdateTodoMapper,
     private readonly createTodoUsecase: ICreateTodoUsecase,
-    private readonly getAllTodoUsecase: IGetAllTodosUseCase
+    private readonly getAllTodoUsecase: IGetAllTodosUsecase,
+    private readonly deleteTodoUsecase: IDeleteTodoUsecase,
+    private readonly updateTodoUsecase: IUpdateTodoUsecase
   ) {}
 
-  async create() {
-    // const result = await this.createTodoUsecase.execute({
-    //   id: Math.random().toString().substring(2),
-    //   body: 'Test Body',
-    //   status: false,
-    //   tag: 'test',
-    //   createdDate: new Date(),
-    // });
-    // // const result = await this.getAllTodoUsecase.execute();
-    // console.log(result);
+  getAll() {
+    return this.getAllTodoUsecase.execute();
+  }
+
+  create(createTodoDto: CreateTodoDto) {
+    return this.createTodoUsecase
+      .execute(this.createTodoMapper.mapTo(createTodoDto))
+      .catch((e: unknown) => {
+        if (e instanceof Error) {
+          if (e.message.includes('E11000')) {
+            throw new BadRequestException('A todo with this id already exist.');
+          }
+        }
+        throw new InternalServerErrorException('Todo could not created.');
+      });
+  }
+
+  delete(id: string) {
+    return this.deleteTodoUsecase.execute(id);
+  }
+
+  async update(updateTodoDto: UpdateTodoDto) {
+    return this.updateTodoUsecase.execute(
+      this.updateTodoMapper.mapTo(updateTodoDto)
+    );
   }
 }

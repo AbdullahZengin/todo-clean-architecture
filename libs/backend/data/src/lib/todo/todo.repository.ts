@@ -1,19 +1,19 @@
 import { ITodoRepository, Todo } from '@udao/backend-core';
-import { IDatabase } from './datasources/database.interface';
+import { ITodoDatasource } from './datasources/database.interface';
 
 export class TodoRepository implements ITodoRepository {
-  constructor(private database: IDatabase) {}
+  constructor(private datasource: ITodoDatasource) {}
 
   getAll(): Promise<Todo[]> {
-    return this.database.getAll();
+    return this.datasource.getAll();
   }
   create(todo: Todo): Promise<Todo> {
-    return this.database.create(todo);
+    return this.datasource.create(todo);
   }
   delete(id: string): Promise<void> {
-    return this.database.delete(id);
+    return this.datasource.delete(id);
   }
   update(todo: Todo): Promise<Todo> {
-    return this.database.update(todo);
+    return this.datasource.update(todo);
   }
 }

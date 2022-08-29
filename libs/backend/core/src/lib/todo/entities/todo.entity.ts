@@ -2,6 +2,6 @@ export interface Todo {
   id: string;
   body: string;
   status: boolean;
-  tag: string;
+  tag?: string;
   createdDate: Date;
 }

@@ -1,10 +1,13 @@
 import { Module } from '@nestjs/common';
 import { MongoTodoDatasource } from './mongo-todo-datasource';
-import { IDatabase } from '@udao/backend-data';
+import { ITodoDatasource } from '@udao/backend-data';
 import { MongooseModule } from '@nestjs/mongoose';
 import { TodoSchema } from './schemas/todo.schema';
 
-const databaseProvider = { provide: IDatabase, useClass: MongoTodoDatasource };
+const databaseProvider = {
+  provide: ITodoDatasource,
+  useClass: MongoTodoDatasource,
+};
 
 @Module({
   imports: [MongooseModule.forFeature([{ name: 'Todo', schema: TodoSchema }])],
