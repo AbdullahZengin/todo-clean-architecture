@@ -6,6 +6,7 @@ import { NxWelcomeComponent } from './nx-welcome.component';
 import { RouterModule } from '@angular/router';
 
 import { HttpClientModule } from '@angular/common/http';
+import { TODO_PROVIDERS } from './di/todo.di';
 
 @NgModule({
   declarations: [AppComponent, NxWelcomeComponent],
@@ -14,7 +15,9 @@ import { HttpClientModule } from '@angular/common/http';
     RouterModule.forRoot([], { initialNavigation: 'enabledBlocking' }),
     HttpClientModule,
   ],
-  providers: [],
+  providers: [
+    ...TODO_PROVIDERS
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
