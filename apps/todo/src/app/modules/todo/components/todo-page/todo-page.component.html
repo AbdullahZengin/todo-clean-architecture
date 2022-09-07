@@ -1,0 +1,21 @@
+<ng-container *ngIf="!isLoading; loadingView">
+  <div>
+    <h2>Create New Usecase <button>+</button></h2>
+  </div>
+
+  <div class="full-page">
+    <div
+      *ngFor="let todo of todos"
+      class="todo"
+      [class.completed]="todo.status"
+    >
+      {{ todo.body }}
+
+      <button (click)="setDone(todo)">Done</button>
+    </div>
+  </div>
+</ng-container>
+
+<ng-template #loadingView>
+  <h1>Loading</h1>
+</ng-template>

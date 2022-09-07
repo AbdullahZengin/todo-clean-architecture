@@ -9,7 +9,7 @@ import { UsecaseProvidersModule } from './di/usecase-providers.module';
 
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://localhost:27017/todo-workshop'),
+    MongooseModule.forRoot('mongodb://root:example@localhost:27017/todo-workshop?authSource=admin'),
     UsecaseProvidersModule.forRoot(),
     MongoTodoDatasourceModule,
     TodoModule,

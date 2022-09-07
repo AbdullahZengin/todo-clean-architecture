@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router';
 
 import { HttpClientModule } from '@angular/common/http';
 import { TODO_PROVIDERS } from './di/todo.di';
+import { TodoModule } from './modules/todo/todo.module';
 
 @NgModule({
   declarations: [AppComponent, NxWelcomeComponent],
@@ -14,6 +15,7 @@ import { TODO_PROVIDERS } from './di/todo.di';
     BrowserModule,
     RouterModule.forRoot([], { initialNavigation: 'enabledBlocking' }),
     HttpClientModule,
+    TodoModule
   ],
   providers: [
     ...TODO_PROVIDERS
