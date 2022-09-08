@@ -7,6 +7,11 @@ export class TodoRepository implements ITodoRepository {
   getAll(): Promise<Todo[]> {
     return this.datasource.getAll();
   }
+
+  getById(id: string): Promise<Todo> {
+    return this.datasource.getById(id);
+  }
+
   create(todo: Todo): Promise<Todo> {
     return this.datasource.create(todo);
   }

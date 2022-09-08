@@ -1,3 +1,4 @@
+import { UPDATE_TODO_STATUS_URL } from './../../../../../../libs/api-interface/src/lib/todo/todo-api-interface';
 import {
   Body,
   Controller,
@@ -40,5 +41,10 @@ export class TodoController {
   @Delete(DELETE_TODO_URL.def)
   delete(@Param('id') id: string): Promise<void> {
     return this.todoService.delete(id);
+  }
+
+  @Put(UPDATE_TODO_STATUS_URL.def)
+  updateTodoStatus(@Param('id') id: string){
+    return this.todoService.updateTodoStatus(id)
   }
 }

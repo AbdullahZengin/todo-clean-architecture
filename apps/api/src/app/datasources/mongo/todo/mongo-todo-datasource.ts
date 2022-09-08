@@ -9,6 +9,10 @@ export class MongoTodoDatasource implements ITodoDatasource {
     @InjectModel('Todo') private readonly todoModel: Model<TodoDocument>
   ) {}
 
+  getById(id: string): Promise<Todo> {
+    return this.todoModel.findOne({ id: id }).exec();
+  }
+
   getAll(): Promise<Todo[]> {
     return this.todoModel.find({}, { _id: 0 }).exec();
   }

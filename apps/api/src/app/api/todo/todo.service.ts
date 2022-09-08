@@ -1,7 +1,9 @@
+
 import {
   BadRequestException,
   Injectable,
   InternalServerErrorException,
+  NotFoundException,
 } from '@nestjs/common';
 import { CreateTodoDto, UpdateTodoDto } from './dto/todo.dto';
 import { CreateTodoMapper, UpdateTodoMapper } from './mapper/todo.mapper';
@@ -10,6 +12,7 @@ import {
   ICreateTodoUsecase,
   IDeleteTodoUsecase,
   IGetAllTodosUsecase,
+  IUpdateTodoStatusUsecase,
   IUpdateTodoUsecase,
 } from '@udao/backend-core';
 
@@ -21,7 +24,8 @@ export class TodoService {
     private readonly createTodoUsecase: ICreateTodoUsecase,
     private readonly getAllTodoUsecase: IGetAllTodosUsecase,
     private readonly deleteTodoUsecase: IDeleteTodoUsecase,
-    private readonly updateTodoUsecase: IUpdateTodoUsecase
+    private readonly updateTodoUsecase: IUpdateTodoUsecase,
+    private readonly updateTodoStatusUsecase: IUpdateTodoStatusUsecase
   ) {}
 
   getAll() {
@@ -49,5 +53,13 @@ export class TodoService {
     return this.updateTodoUsecase.execute(
       this.updateTodoMapper.mapTo(updateTodoDto)
     );
+  }
+
+  async updateTodoStatus(id: string){
+  return this.updateTodoStatusUsecase.execute(id).catch((e: unknown) => {
+      if (e instanceof Error) {
+        throw new NotFoundException('Todo could not found.');
+      }
+    });
   }
 }
