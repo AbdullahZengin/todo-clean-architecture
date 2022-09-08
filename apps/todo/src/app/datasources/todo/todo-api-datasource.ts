@@ -1,6 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { GET_ALL_TODOS_URL, UPDATE_TODO_STATUS_URL } from '@udao/api-interface';
+import {
+  CREATE_TODO_URL,
+  GET_ALL_TODOS_URL,
+  UPDATE_TODO_STATUS_URL,
+} from '@udao/api-interface';
 import { Todo } from '@udao/presentation-core';
 import { ITodoApiDatasource } from '@udao/presentation-data';
 
@@ -18,11 +22,15 @@ export class TodoApiDatasource implements ITodoApiDatasource {
     );
   }
 
+  createTodo(todo: Todo): Promise<Todo> {
+    return firstValueFrom(
+      this.http.post<Todo>(`${this.SERVER_URL}/${CREATE_TODO_URL.call()}`, todo)
+    );
+  }
+
   async toggleTodoStatus(id: string): Promise<void> {
     await firstValueFrom(
-      this.http.put(
-        `${this.SERVER_URL}/${UPDATE_TODO_STATUS_URL.call(id)}`,{}
-      )
+      this.http.put(`${this.SERVER_URL}/${UPDATE_TODO_STATUS_URL.call(id)}`, {})
     );
   }
 }

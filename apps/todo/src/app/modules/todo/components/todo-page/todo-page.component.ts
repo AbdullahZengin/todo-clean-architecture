@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import {
+  ICreateTodoUsecase,
   IGetAllTodosUsecase,
   IToggleTodoStatusUsecase,
   Todo,
@@ -16,13 +17,20 @@ export class TodoPageComponent implements OnInit {
 
   constructor(
     private getAllTodosUsecase: IGetAllTodosUsecase,
-    private toggleTodoStatusUsecase: IToggleTodoStatusUsecase
+    private toggleTodoStatusUsecase: IToggleTodoStatusUsecase,
+    private createTodoUsecase: ICreateTodoUsecase
   ) {}
 
   ngOnInit(): void {
     this.getAllTodosUsecase.execute().then((loadedTodos) => {
       this.todos = loadedTodos;
       this.isLoading = false;
+    });
+  }
+
+  addTodo(body: string) {
+    this.createTodoUsecase.execute(body).then((todo) => {
+      this.todos.push(todo);
     });
   }
 

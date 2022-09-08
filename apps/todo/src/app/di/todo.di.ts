@@ -1,6 +1,8 @@
 import { Provider } from '@angular/core';
 import {
+  CreateTodoUsecase,
   GetAllTodosUsecase,
+  ICreateTodoUsecase,
   IGetAllTodosUsecase,
   ITodoRepository,
   IToggleTodoStatusUsecase,
@@ -30,6 +32,12 @@ export const TODO_PROVIDERS: Provider[] = [
     provide: IToggleTodoStatusUsecase,
     useFactory: (todoRepository: ITodoRepository) =>
       new ToggleTodoStatusUsecase(todoRepository),
+    deps: [ITodoRepository],
+  },
+  {
+    provide: ICreateTodoUsecase,
+    useFactory: (todoRepository: ITodoRepository) =>
+      new CreateTodoUsecase(todoRepository),
     deps: [ITodoRepository],
   },
 ];

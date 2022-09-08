@@ -1,6 +1,13 @@
 <ng-container *ngIf="!isLoading; loadingView">
   <div>
-    <h2>Create New Usecase <button>+</button></h2>
+    <h2>Create New Usecase</h2>
+  </div>
+
+  <div>
+    <input type="text" #todoInput />
+    <button (click)="addTodo(todoInput.value); todoInput.value = ''">
+      Add Todo
+    </button>
   </div>
 
   <div class="full-page">
