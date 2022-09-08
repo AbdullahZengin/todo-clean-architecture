@@ -7,4 +7,8 @@ export class TodoRepository implements ITodoRepository {
   getAllTodos(): Promise<Todo[]> {
     return this.apiDatasource.getAllTodos();
   }
+
+  toggleTodoStatus(id: string): Promise<void> {
+    return this.apiDatasource.toggleTodoStatus(id);
+  }
 }

@@ -3,6 +3,8 @@ import {
   GetAllTodosUsecase,
   IGetAllTodosUsecase,
   ITodoRepository,
+  IToggleTodoStatusUsecase,
+  ToggleTodoStatusUsecase,
 } from '@udao/presentation-core';
 import { ITodoApiDatasource, TodoRepository } from '@udao/presentation-data';
 import { TodoApiDatasource } from '../datasources/todo/todo-api-datasource';
@@ -22,6 +24,12 @@ export const TODO_PROVIDERS: Provider[] = [
     provide: IGetAllTodosUsecase,
     useFactory: (todoRepository: ITodoRepository) =>
       new GetAllTodosUsecase(todoRepository),
+    deps: [ITodoRepository],
+  },
+  {
+    provide: IToggleTodoStatusUsecase,
+    useFactory: (todoRepository: ITodoRepository) =>
+      new ToggleTodoStatusUsecase(todoRepository),
     deps: [ITodoRepository],
   },
 ];

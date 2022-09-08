@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
-import { IGetAllTodosUsecase, Todo } from '@udao/presentation-core';
+import {
+  IGetAllTodosUsecase,
+  IToggleTodoStatusUsecase,
+  Todo,
+} from '@udao/presentation-core';
 
 @Component({
   templateUrl: './todo-page.component.html',
@@ -10,7 +14,10 @@ export class TodoPageComponent implements OnInit {
   isLoading = true;
   todos: Todo[] = [];
 
-  constructor(private getAllTodosUsecase: IGetAllTodosUsecase) {}
+  constructor(
+    private getAllTodosUsecase: IGetAllTodosUsecase,
+    private toggleTodoStatusUsecase: IToggleTodoStatusUsecase
+  ) {}
 
   ngOnInit(): void {
     this.getAllTodosUsecase.execute().then((loadedTodos) => {
@@ -19,7 +26,12 @@ export class TodoPageComponent implements OnInit {
     });
   }
 
-  setDone(todo: Todo) {
-    console.log('Todo Updated');
+  setDone(id: string) {
+    this.toggleTodoStatusUsecase.execute(id).then(() => {
+      const todo = this.todos.find((todo) => todo.id === id);
+      if (todo) {
+        todo.status = !todo.status;
+      }
+    });
   }
 }
