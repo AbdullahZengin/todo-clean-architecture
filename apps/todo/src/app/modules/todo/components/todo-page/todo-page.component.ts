@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { IUpdateTodoStatusUsecase } from '@udao/backend-core';
 
 import {
   ICreateTodoUsecase,
   IGetAllTodosUsecase,
   IToggleTodoStatusUsecase,
+  IUpdateTodoUsecase,
   Todo,
 } from '@udao/presentation-core';
 
@@ -18,7 +20,8 @@ export class TodoPageComponent implements OnInit {
   constructor(
     private getAllTodosUsecase: IGetAllTodosUsecase,
     private toggleTodoStatusUsecase: IToggleTodoStatusUsecase,
-    private createTodoUsecase: ICreateTodoUsecase
+    private createTodoUsecase: ICreateTodoUsecase,
+    private updateTodoUsecase: IUpdateTodoUsecase
   ) {}
 
   ngOnInit(): void {
@@ -31,6 +34,15 @@ export class TodoPageComponent implements OnInit {
   addTodo(body: string) {
     this.createTodoUsecase.execute(body).then((todo) => {
       this.todos.push(todo);
+    });
+  }
+
+  updateTodo(todo: Todo, body: string) {
+    this.updateTodoUsecase.execute({ ...todo, body }).then(() => {
+      const updateTodo = this.todos.find((todo) => todo.id === todo.id);
+      if (updateTodo) {
+        updateTodo.body = body;
+      }
     });
   }
 

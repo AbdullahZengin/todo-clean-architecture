@@ -4,6 +4,7 @@ import {
   CREATE_TODO_URL,
   GET_ALL_TODOS_URL,
   UPDATE_TODO_STATUS_URL,
+  UPDATE_TODO_URL,
 } from '@udao/api-interface';
 import { Todo } from '@udao/presentation-core';
 import { ITodoApiDatasource } from '@udao/presentation-data';
@@ -25,6 +26,12 @@ export class TodoApiDatasource implements ITodoApiDatasource {
   createTodo(todo: Todo): Promise<Todo> {
     return firstValueFrom(
       this.http.post<Todo>(`${this.SERVER_URL}/${CREATE_TODO_URL.call()}`, todo)
+    );
+  }
+
+  updateTodo(todo: Todo): Promise<Todo> {
+    return firstValueFrom(
+      this.http.put<Todo>(`${this.SERVER_URL}/${UPDATE_TODO_URL.call()}`, todo)
     );
   }
 

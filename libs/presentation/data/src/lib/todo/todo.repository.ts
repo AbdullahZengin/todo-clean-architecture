@@ -12,6 +12,10 @@ export class TodoRepository implements ITodoRepository {
     return this.apiDatasource.createTodo(todo);
   }
 
+  updateTodo(todo: Todo): Promise<Todo> {
+    return this.apiDatasource.updateTodo(todo);
+  }
+
   toggleTodoStatus(id: string): Promise<void> {
     return this.apiDatasource.toggleTodoStatus(id);
   }

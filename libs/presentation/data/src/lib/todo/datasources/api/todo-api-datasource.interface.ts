@@ -5,5 +5,7 @@ export abstract class ITodoApiDatasource {
 
   abstract createTodo(todo: Todo): Promise<Todo>;
 
+  abstract updateTodo(todo: Todo): Promise<Todo>;
+
   abstract toggleTodoStatus(id: string): Promise<void>;
 }
