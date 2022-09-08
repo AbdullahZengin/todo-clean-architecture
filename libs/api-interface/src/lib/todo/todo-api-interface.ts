@@ -23,7 +23,7 @@ export const UPDATE_TODO_URL: IApiEndpoint = {
 
 export const DELETE_TODO_URL: IApiEndpoint = {
   def: `:id`,
-  call: (id: string) => `${TODO_API_ROOT}/${id}`,
+  call: (id: string) => `${TODO_API_CALL_ROOT}/${id}`,
 };
 
 export const UPDATE_TODO_STATUS_URL: IApiEndpoint = {

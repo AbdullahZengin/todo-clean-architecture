@@ -20,6 +20,7 @@
 
       <button (click)="setDone(todo.id)">Done</button>
       <button (click)="updateTodo(todo, todoUpdate.value)">Update</button>
+      <button (click)="deleteTodo(todo.id)">Delete</button>
       <div>
         <input type="text" #todoUpdate [value]="todo.body" />
       </div>

@@ -1,4 +1,3 @@
-import { UPDATE_TODO_STATUS_URL } from './../../../../../../libs/api-interface/src/lib/todo/todo-api-interface';
 import {
   Body,
   Controller,
@@ -13,6 +12,7 @@ import {
   DELETE_TODO_URL,
   GET_ALL_TODOS_URL,
   TODO_API_ROOT,
+  UPDATE_TODO_STATUS_URL,
   UPDATE_TODO_URL,
 } from '@udao/api-interface';
 import { TodoService } from './todo.service';
@@ -44,7 +44,7 @@ export class TodoController {
   }
 
   @Put(UPDATE_TODO_STATUS_URL.def)
-  updateTodoStatus(@Param('id') id: string){
-    return this.todoService.updateTodoStatus(id)
+  updateTodoStatus(@Param('id') id: string) {
+    return this.todoService.updateTodoStatus(id);
   }
 }

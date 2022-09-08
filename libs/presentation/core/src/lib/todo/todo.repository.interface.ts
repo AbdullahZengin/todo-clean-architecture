@@ -7,5 +7,7 @@ export abstract class ITodoRepository {
 
   abstract updateTodo(todo: Todo): Promise<Todo>;
 
+  abstract deleteTodo(id: string): Promise<void>;
+
   abstract toggleTodoStatus(id: string): Promise<void>;
 }

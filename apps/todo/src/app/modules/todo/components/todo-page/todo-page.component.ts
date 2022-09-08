@@ -3,6 +3,7 @@ import { IUpdateTodoStatusUsecase } from '@udao/backend-core';
 
 import {
   ICreateTodoUsecase,
+  IDeleteTodoUsecase,
   IGetAllTodosUsecase,
   IToggleTodoStatusUsecase,
   IUpdateTodoUsecase,
@@ -21,7 +22,8 @@ export class TodoPageComponent implements OnInit {
     private getAllTodosUsecase: IGetAllTodosUsecase,
     private toggleTodoStatusUsecase: IToggleTodoStatusUsecase,
     private createTodoUsecase: ICreateTodoUsecase,
-    private updateTodoUsecase: IUpdateTodoUsecase
+    private updateTodoUsecase: IUpdateTodoUsecase,
+    private deleteTodoUsecase: IDeleteTodoUsecase
   ) {}
 
   ngOnInit(): void {
@@ -51,6 +53,15 @@ export class TodoPageComponent implements OnInit {
       const todo = this.todos.find((todo) => todo.id === id);
       if (todo) {
         todo.status = !todo.status;
+      }
+    });
+  }
+
+  deleteTodo(id: string) {
+    this.deleteTodoUsecase.execute(id).then(() => {
+      const deleteTodoIndex = this.todos.findIndex((todo) => todo.id === id);
+      if (deleteTodoIndex !== -1) {
+        this.todos.splice(deleteTodoIndex, 1);
       }
     });
   }

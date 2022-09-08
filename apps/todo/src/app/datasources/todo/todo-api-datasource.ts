@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {
   CREATE_TODO_URL,
+  DELETE_TODO_URL,
   GET_ALL_TODOS_URL,
   UPDATE_TODO_STATUS_URL,
   UPDATE_TODO_URL,
@@ -38,6 +39,12 @@ export class TodoApiDatasource implements ITodoApiDatasource {
   async toggleTodoStatus(id: string): Promise<void> {
     await firstValueFrom(
       this.http.put(`${this.SERVER_URL}/${UPDATE_TODO_STATUS_URL.call(id)}`, {})
+    );
+  }
+
+  async deleteTodo(id: string): Promise<void> {
+    await firstValueFrom(
+      this.http.delete(`${this.SERVER_URL}/${DELETE_TODO_URL.call(id)}`)
     );
   }
 }
