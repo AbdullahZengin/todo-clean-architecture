@@ -39,9 +39,9 @@ export class TodoPageComponent implements OnInit {
     });
   }
 
-  updateTodo(todo: Todo, body: string) {
-    this.updateTodoUsecase.execute({ ...todo, body }).then(() => {
-      const updateTodo = this.todos.find((todo) => todo.id === todo.id);
+  updateTodo(todoToUpdate: Todo, body: string) {
+    this.updateTodoUsecase.execute({ ...todoToUpdate, body }).then(() => {
+      const updateTodo = this.todos.find((todo) => todo.id === todoToUpdate.id);
       if (updateTodo) {
         updateTodo.body = body;
       }
