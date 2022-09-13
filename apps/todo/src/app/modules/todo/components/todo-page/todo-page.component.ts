@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { IUpdateTodoStatusUsecase } from '@udao/backend-core';
 
 import {
   ICreateTodoUsecase,
   IDeleteTodoUsecase,
   IGetAllTodosUsecase,
+  ILogoutUsecase,
   IToggleTodoStatusUsecase,
   IUpdateTodoUsecase,
   Todo,
@@ -19,11 +21,13 @@ export class TodoPageComponent implements OnInit {
   todos: Todo[] = [];
 
   constructor(
+    private router: Router,
     private getAllTodosUsecase: IGetAllTodosUsecase,
     private toggleTodoStatusUsecase: IToggleTodoStatusUsecase,
     private createTodoUsecase: ICreateTodoUsecase,
     private updateTodoUsecase: IUpdateTodoUsecase,
-    private deleteTodoUsecase: IDeleteTodoUsecase
+    private deleteTodoUsecase: IDeleteTodoUsecase,
+    private logoutUsecase: ILogoutUsecase
   ) {}
 
   ngOnInit(): void {
@@ -64,5 +68,9 @@ export class TodoPageComponent implements OnInit {
         this.todos.splice(deleteTodoIndex, 1);
       }
     });
+  }
+  async logout() {
+    await this.logoutUsecase.execute();
+    this.router.navigate(['/login']);
   }
 }

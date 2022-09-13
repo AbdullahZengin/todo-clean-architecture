@@ -7,19 +7,21 @@ import { RouterModule } from '@angular/router';
 
 import { HttpClientModule } from '@angular/common/http';
 import { TODO_PROVIDERS } from './di/todo.di';
-import { TodoModule } from './modules/todo/todo.module';
+// import { TodoModule } from './modules/todo/todo.module';
+import { LoginComponent } from './components/login/login.component';
+import { AppRoutingModule } from './app.routing';
+import { AUTH_PROVIDERS } from './di/auth.di';
 
 @NgModule({
-  declarations: [AppComponent, NxWelcomeComponent],
+  declarations: [AppComponent, NxWelcomeComponent, LoginComponent],
   imports: [
+    AppRoutingModule,
     BrowserModule,
     RouterModule.forRoot([], { initialNavigation: 'enabledBlocking' }),
     HttpClientModule,
-    TodoModule
+    // TodoModule,
   ],
-  providers: [
-    ...TODO_PROVIDERS
-  ],
+  providers: [...TODO_PROVIDERS, ...AUTH_PROVIDERS],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

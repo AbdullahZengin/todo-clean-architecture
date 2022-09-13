@@ -5,7 +5,7 @@ import { TodoPageComponent } from './components/todo-page/todo-page.component';
 const routes: Routes = [{ path: '', component: TodoPageComponent }];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
 export class TodoRoutingModule {}
