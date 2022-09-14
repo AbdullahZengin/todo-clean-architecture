@@ -1,4 +1,4 @@
-import { UpdateTodoStatusUsecase } from './../../../../../libs/backend/core/src/lib/todo/usecases/update-todo-status.usecase';
+
 import { DynamicModule, Global, Module, Provider } from '@nestjs/common';
 import { ITodoDatasource, TodoRepository } from '@udao/backend-data';
 import { MongoTodoDatasourceModule } from '../datasources/mongo/todo/mongo-todo-datasource.module';
@@ -13,6 +13,7 @@ import {
   ITodoRepository,
   IUpdateTodoStatusUsecase,
   IUpdateTodoUsecase,
+  UpdateTodoStatusUsecase,
   UpdateTodoUsecase,
 } from '@udao/backend-core';
 
