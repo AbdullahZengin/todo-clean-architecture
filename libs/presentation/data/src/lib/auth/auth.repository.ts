@@ -1,4 +1,4 @@
-import { IAuthRepository, LoginUser, User } from '@udao/presentation-core';
+import { IAuthRepository, LoginInfo, User } from '@udao/presentation-core';
 import { IAuthApiDatasource } from './datasources/auth-api-datasource.interface';
 import { IAuthTokenDatasource } from './datasources/auth-token-datasource.interface';
 
@@ -8,7 +8,7 @@ export class AuthRepository implements IAuthRepository {
     private localStorage: IAuthTokenDatasource
   ) {}
 
-  login(loginUser: LoginUser): Promise<User> {
+  login(loginUser: LoginInfo): Promise<User> {
     return this.api.login(loginUser);
   }
   removeToken(): Promise<void> {

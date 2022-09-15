@@ -6,7 +6,7 @@ export interface IAuthApiEndpoint {
   export const AUTH_API_ROOT = 'auth';
   const AUTH_API_CALL_ROOT = 'api/auth';
 
-  export const LOGIN_API_URL: IAuthApiEndpoint = {
+  export const LOGIN_URL: IAuthApiEndpoint = {
     def: '/login',
     call: () => `${AUTH_API_CALL_ROOT}/login`,
   }

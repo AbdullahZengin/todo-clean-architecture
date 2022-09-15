@@ -1,5 +1,5 @@
 export * from './entities/user.entity';
-export * from './entities/login-user.entity';
+export * from './entities/login-info.entity';
 
 export * from './usecases/login.usecase';
 export * from './usecases/logout.usecase';
