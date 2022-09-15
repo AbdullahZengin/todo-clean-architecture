@@ -1,5 +1,5 @@
-import { LoginUser } from '@udao/backend-core';
+import { UserWithPassword } from '@udao/backend-core';
 export abstract class IAuthDatabaseDatasource {
 
-  abstract getUser(username: string): Promise<LoginUser | undefined>;
+  abstract getUser(username: string): Promise<UserWithPassword | undefined>;
 }

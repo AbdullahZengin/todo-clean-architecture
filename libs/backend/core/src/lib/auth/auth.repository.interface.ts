@@ -1,5 +1,5 @@
-import { LoginUser } from './entities/login-user.entity';
+import { User, UserWithPassword } from './entities/user.entity';
 
 export abstract class IAuthRepository {
-  abstract getUser(username: string): Promise<LoginUser | undefined>;
+  abstract getUser(username: string): Promise<UserWithPassword | undefined>;
 }

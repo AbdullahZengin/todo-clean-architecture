@@ -1,4 +1,4 @@
-import { MongoTodoDatasourceModule } from './datasources/mongo/todo/mongo-todo-datasource.module';
+import { AuthModule } from './api/auth/auth.module';
 import { Module } from '@nestjs/common';
 
 import { AppController } from './app.controller';
@@ -12,8 +12,8 @@ import { UsecaseProvidersModule } from './di/usecase-providers.module';
     //MongooseModule.forRoot('mongodb://root:example@localhost:27017/todo-workshop?authSource=admin'),
     MongooseModule.forRoot('mongodb://localhost:27017/todo-workshop'),
     UsecaseProvidersModule.forRoot(),
-    MongoTodoDatasourceModule,
     TodoModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

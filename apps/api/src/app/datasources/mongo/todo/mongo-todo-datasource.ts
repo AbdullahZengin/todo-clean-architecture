@@ -1,6 +1,6 @@
 import { InjectModel } from '@nestjs/mongoose';
-import { CreateTodoUsecase, Todo } from '@udao/backend-core';
-import { ITodoDatasource, TodoRepository } from '@udao/backend-data';
+import { Todo } from '@udao/backend-core';
+import { ITodoDatasource} from '@udao/backend-data';
 import { Model } from 'mongoose';
 import { TodoDocument } from './interfaces/todo.interface';
 

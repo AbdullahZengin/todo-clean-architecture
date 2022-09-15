@@ -1,18 +1,26 @@
-
+import { MongoAuthDatasourceModule } from './../datasources/mongo/auth/mongo-auth-datasource.module';
 import { DynamicModule, Global, Module, Provider } from '@nestjs/common';
-import { ITodoDatasource, TodoRepository } from '@udao/backend-data';
+import {
+  AuthRepository,
+  IAuthDatabaseDatasource,
+  ITodoDatasource,
+  TodoRepository,
+} from '@udao/backend-data';
 import { MongoTodoDatasourceModule } from '../datasources/mongo/todo/mongo-todo-datasource.module';
 
 import {
   CreateTodoUsecase,
   DeleteTodoUsecase,
   GetAllTodosUsecase,
+  IAuthRepository,
   ICreateTodoUsecase,
   IDeleteTodoUsecase,
   IGetAllTodosUsecase,
+  ILoginUsecase,
   ITodoRepository,
   IUpdateTodoStatusUsecase,
   IUpdateTodoUsecase,
+  LoginUsecase,
   UpdateTodoStatusUsecase,
   UpdateTodoUsecase,
 } from '@udao/backend-core';
@@ -55,6 +63,18 @@ export const PROVIDERS: Provider[] = [
     useFactory: (todoRepository: ITodoRepository) =>
       new UpdateTodoStatusUsecase(todoRepository),
   },
+  {
+    inject: [IAuthDatabaseDatasource],
+    provide: IAuthRepository,
+    useFactory: (authDatasource: IAuthDatabaseDatasource) =>
+      new AuthRepository(authDatasource),
+  },
+  {
+    inject: [IAuthRepository],
+    provide: ILoginUsecase,
+    useFactory: (authRepository: IAuthRepository) =>
+      new LoginUsecase(authRepository),
+  },
 ];
 
 @Global()
@@ -62,7 +82,7 @@ export const PROVIDERS: Provider[] = [
 export class UsecaseProvidersModule {
   static forRoot(): DynamicModule {
     return {
-      imports: [MongoTodoDatasourceModule],
+      imports: [MongoTodoDatasourceModule,  MongoAuthDatasourceModule],
       module: UsecaseProvidersModule,
       providers: [...PROVIDERS],
       exports: [...PROVIDERS],

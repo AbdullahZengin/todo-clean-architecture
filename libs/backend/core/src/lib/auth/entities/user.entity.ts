@@ -3,3 +3,8 @@ export class User {
   username!: string;
   roles!: string[];
 }
+
+
+export class UserWithPassword extends User {
+  password!: string;
+}
