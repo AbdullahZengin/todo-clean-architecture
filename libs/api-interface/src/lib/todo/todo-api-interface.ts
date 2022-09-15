@@ -22,7 +22,7 @@ export namespace TodoEndpoints {
 
   export const DELETE_TODO = {
     def: `:id`,
-    call: (id: string) => `$}/${id}`,
+    call: (id: string) => `${_ABSOLUTE_ROOT}/${id}`,
   };
 
   export const UPDATE_TODO_STATUS = {

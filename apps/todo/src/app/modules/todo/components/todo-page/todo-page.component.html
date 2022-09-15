@@ -1,14 +1,30 @@
 <ng-container *ngIf="!isLoading; loadingView">
   <div>
-    <h2>Create New Usecase</h2>
+    <h2>TODOs</h2>
   </div>
 
+  <input [(ngModel)]="bodyFilterValue" placeholder="Filter by body..." />
+
+  <div>
+    <h2>Filter by status:</h2>
+
+    <select [(ngModel)]="statusFilterValue">
+      <option [ngValue]="undefined">...</option>
+      <option [ngValue]="true">Done</option>
+      <option [ngValue]="false">Not Done</option>
+    </select>
+  </div>
+
+  <!-- Add Todo -->
   <div>
     <input type="text" #todoInput />
+
     <button (click)="addTodo(todoInput.value); todoInput.value = ''">
       Add Todo
     </button>
   </div>
+
+  <!-- Logout -->
   <div style="position: absolute; right: 50px; top: 50px">
     <button
       (click)="logout()"
@@ -18,9 +34,16 @@
     </button>
   </div>
 
+  <!-- Todo List -->
   <div class="full-page">
     <div
-      *ngFor="let todo of todos"
+      *ngFor="
+        let todo of todos
+          | filterTodoByBody: bodyFilterValue
+          | async
+          | filterTodoByStatus: statusFilterValue
+          | async
+      "
       class="todo"
       [class.completed]="todo.status"
     >

@@ -4,4 +4,6 @@ export * from './usecases/toggle-todo-status.usecase';
 export * from './usecases/create-todo.usecase';
 export * from './usecases/update-todo.usecase';
 export * from './usecases/delete-todo.usecase';
+export * from './usecases/filter-todos-by-body.usecase';
+export * from './usecases/filter-todos-by-status.usecase';
 export * from './todo.repository.interface';

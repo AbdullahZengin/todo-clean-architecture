@@ -2,9 +2,13 @@ import { Provider } from '@angular/core';
 import {
   CreateTodoUsecase,
   DeleteTodoUsecase,
+  FilterTodosByBodyUsecase,
+  FilterTodosByStatusUsecase,
   GetAllTodosUsecase,
   ICreateTodoUsecase,
   IDeleteTodoUsecase,
+  IFilterTodosByBodyUsecase,
+  IFilterTodosByStatusUsecase,
   IGetAllTodosUsecase,
   ITodoRepository,
   IToggleTodoStatusUsecase,
@@ -13,6 +17,7 @@ import {
   UpdateTodoUsecase,
 } from '@udao/presentation-core';
 import { ITodoApiDatasource, TodoRepository } from '@udao/presentation-data';
+
 import { TodoApiDatasource } from '../datasources/todo/todo-api-datasource';
 
 export const TODO_PROVIDERS: Provider[] = [
@@ -54,6 +59,16 @@ export const TODO_PROVIDERS: Provider[] = [
     provide: IDeleteTodoUsecase,
     useFactory: (todoRepository: ITodoRepository) =>
       new DeleteTodoUsecase(todoRepository),
+    deps: [ITodoRepository],
+  },
+  {
+    provide: IFilterTodosByBodyUsecase,
+    useFactory: () => new FilterTodosByBodyUsecase(),
+    deps: [ITodoRepository],
+  },
+  {
+    provide: IFilterTodosByStatusUsecase,
+    useFactory: () => new FilterTodosByStatusUsecase(),
     deps: [ITodoRepository],
   },
 ];

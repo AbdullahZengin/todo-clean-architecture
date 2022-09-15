@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+} from '@angular/core';
 import { Router } from '@angular/router';
-import { IUpdateTodoStatusUsecase } from '@udao/backend-core';
-
 import {
   ICreateTodoUsecase,
   IDeleteTodoUsecase,
@@ -18,10 +21,17 @@ import {
 })
 export class TodoPageComponent implements OnInit {
   isLoading = true;
+
   todos: Todo[] = [];
+
+  bodyFilterValue = '';
+  statusFilterValue?: boolean;
 
   constructor(
     private router: Router,
+
+    private changeDetectorRef: ChangeDetectorRef,
+
     private getAllTodosUsecase: IGetAllTodosUsecase,
     private toggleTodoStatusUsecase: IToggleTodoStatusUsecase,
     private createTodoUsecase: ICreateTodoUsecase,
@@ -39,7 +49,13 @@ export class TodoPageComponent implements OnInit {
 
   addTodo(body: string) {
     this.createTodoUsecase.execute(body).then((todo) => {
-      this.todos.push(todo);
+      setTimeout(() => {
+        this.changeDetectorRef.detectChanges();
+
+        this.todos.push(todo);
+      }, 250);
+
+      console.log('helloooooo');
     });
   }
 
@@ -69,6 +85,7 @@ export class TodoPageComponent implements OnInit {
       }
     });
   }
+
   async logout() {
     await this.logoutUsecase.execute();
     this.router.navigate(['/login']);
