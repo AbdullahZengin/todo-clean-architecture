@@ -3,12 +3,19 @@
     <h2>TODOs</h2>
   </div>
 
-  <input [(ngModel)]="bodyFilterValue" placeholder="Filter by body..." />
+  <input
+    [(ngModel)]="bodyFilterValue"
+    (ngModelChange)="filter(bodyFilterValue, statusFilterValue)"
+    placeholder="Filter by body..."
+  />
 
   <div>
     <h2>Filter by status:</h2>
 
-    <select [(ngModel)]="statusFilterValue">
+    <select
+      [(ngModel)]="statusFilterValue"
+      (ngModelChange)="filter(bodyFilterValue, statusFilterValue)"
+    >
       <option [ngValue]="undefined">...</option>
       <option [ngValue]="true">Done</option>
       <option [ngValue]="false">Not Done</option>
@@ -37,13 +44,7 @@
   <!-- Todo List -->
   <div class="full-page">
     <div
-      *ngFor="
-        let todo of todos
-          | filterTodoByBody: bodyFilterValue
-          | async
-          | filterTodoByStatus: statusFilterValue
-          | async
-      "
+      *ngFor="let todo of filteredTodos"
       class="todo"
       [class.completed]="todo.status"
     >

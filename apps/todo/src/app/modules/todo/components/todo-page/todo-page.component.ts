@@ -1,9 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  OnInit,
-} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {
   ICreateTodoUsecase,
@@ -15,6 +10,9 @@ import {
   Todo,
 } from '@udao/presentation-core';
 
+import { FilterTodosByBodyPipe } from '../../pipes/filter-todos-by-body.pipe';
+import { FilterTodosByStatusPipe } from '../../pipes/filter-todos-by-status.pipe';
+
 @Component({
   templateUrl: './todo-page.component.html',
   styleUrls: ['./todo-page.component.scss'],
@@ -22,7 +20,8 @@ import {
 export class TodoPageComponent implements OnInit {
   isLoading = true;
 
-  todos: Todo[] = [];
+  private todos: Todo[] = [];
+  filteredTodos: Todo[] = [];
 
   bodyFilterValue = '';
   statusFilterValue?: boolean;
@@ -30,32 +29,28 @@ export class TodoPageComponent implements OnInit {
   constructor(
     private router: Router,
 
-    private changeDetectorRef: ChangeDetectorRef,
-
     private getAllTodosUsecase: IGetAllTodosUsecase,
     private toggleTodoStatusUsecase: IToggleTodoStatusUsecase,
     private createTodoUsecase: ICreateTodoUsecase,
     private updateTodoUsecase: IUpdateTodoUsecase,
     private deleteTodoUsecase: IDeleteTodoUsecase,
-    private logoutUsecase: ILogoutUsecase
+    private logoutUsecase: ILogoutUsecase,
+
+    private filterByBodyPipe: FilterTodosByBodyPipe,
+    private filterByStatusPipe: FilterTodosByStatusPipe
   ) {}
 
   ngOnInit(): void {
     this.getAllTodosUsecase.execute().then((loadedTodos) => {
       this.todos = loadedTodos;
+      this.filteredTodos = this.todos;
       this.isLoading = false;
     });
   }
 
   addTodo(body: string) {
     this.createTodoUsecase.execute(body).then((todo) => {
-      setTimeout(() => {
-        this.changeDetectorRef.detectChanges();
-
-        this.todos.push(todo);
-      }, 250);
-
-      console.log('helloooooo');
+      this._addTodoLocally(todo);
     });
   }
 
@@ -79,15 +74,42 @@ export class TodoPageComponent implements OnInit {
 
   deleteTodo(id: string) {
     this.deleteTodoUsecase.execute(id).then(() => {
-      const deleteTodoIndex = this.todos.findIndex((todo) => todo.id === id);
-      if (deleteTodoIndex !== -1) {
-        this.todos.splice(deleteTodoIndex, 1);
-      }
+      this._deleteTodoLocally(id);
     });
   }
 
   async logout() {
     await this.logoutUsecase.execute();
     this.router.navigate(['/login']);
+  }
+
+  async filter(body: string, status: boolean | undefined): Promise<void> {
+    const filteredByBody = await this.filterByBodyPipe.transform(
+      this.todos,
+      body
+    );
+
+    const filteredByBodyAndStatus = await this.filterByStatusPipe.transform(
+      filteredByBody,
+      status
+    );
+
+    this.filteredTodos = filteredByBodyAndStatus;
+  }
+
+  private _addTodoLocally(todo: Todo) {
+    this.todos.push(todo);
+
+    this.filter(this.bodyFilterValue, this.statusFilterValue);
+  }
+
+  private _deleteTodoLocally(todoId: string) {
+    const deleteTodoIndex = this.todos.findIndex((todo) => todo.id === todoId);
+
+    if (deleteTodoIndex !== -1) {
+      this.todos.splice(deleteTodoIndex, 1);
+    }
+
+    this.filter(this.bodyFilterValue, this.statusFilterValue);
   }
 }
