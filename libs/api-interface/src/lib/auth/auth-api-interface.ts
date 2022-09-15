@@ -1,12 +1,11 @@
-export interface IAuthApiEndpoint {
-    def: string;
-    call: (...args: any[]) => string;
-  }
+/* eslint-disable @typescript-eslint/no-namespace */
+export namespace AuthEndpoints {
+  const _ABSOLUTE_ROOT = 'api/auth';
 
-  export const AUTH_API_ROOT = 'auth';
-  const AUTH_API_CALL_ROOT = 'api/auth';
+  export const ROOT = 'auth';
 
-  export const LOGIN_URL: IAuthApiEndpoint = {
+  export const LOGIN_URL = {
     def: '/login',
-    call: () => `${AUTH_API_CALL_ROOT}/login`,
-  }
+    call: () => `${_ABSOLUTE_ROOT}/login`,
+  };
+}

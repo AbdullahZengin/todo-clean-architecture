@@ -7,43 +7,38 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import {
-  CREATE_TODO_URL,
-  DELETE_TODO_URL,
-  GET_ALL_TODOS_URL,
-  TODO_API_ROOT,
-  UPDATE_TODO_STATUS_URL,
-  UPDATE_TODO_URL,
-} from '@udao/api-interface';
-import { TodoService } from './todo.service';
-import { CreateTodoDto, UpdateTodoDto } from './dto/todo.dto';
+import { TodoEndpoints } from '@udao/api-interface';
 import { Todo } from '@udao/backend-core';
 
-@Controller(TODO_API_ROOT)
+import { TodoService } from './todo.service';
+
+import { CreateTodoDto, UpdateTodoDto } from './dto/todo.dto';
+
+@Controller(TodoEndpoints.ROOT)
 export class TodoController {
   constructor(private todoService: TodoService) {}
 
-  @Get(GET_ALL_TODOS_URL.def)
+  @Get(TodoEndpoints.GET_ALL_TODOS.def)
   getAll(): Promise<Todo[]> {
     return this.todoService.getAll();
   }
 
-  @Post(CREATE_TODO_URL.def)
+  @Post(TodoEndpoints.CREATE_TODO.def)
   create(@Body() createTodoDto: CreateTodoDto): Promise<Todo> {
     return this.todoService.create(createTodoDto);
   }
 
-  @Put(UPDATE_TODO_URL.def)
+  @Put(TodoEndpoints.UPDATE_TODO.def)
   update(@Body() updateTodoDto: UpdateTodoDto): Promise<Todo> {
     return this.todoService.update(updateTodoDto);
   }
 
-  @Delete(DELETE_TODO_URL.def)
+  @Delete(TodoEndpoints.DELETE_TODO.def)
   delete(@Param('id') id: string): Promise<void> {
     return this.todoService.delete(id);
   }
 
-  @Put(UPDATE_TODO_STATUS_URL.def)
+  @Put(TodoEndpoints.UPDATE_TODO_STATUS.def)
   updateTodoStatus(@Param('id') id: string) {
     return this.todoService.updateTodoStatus(id);
   }
