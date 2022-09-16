@@ -11,7 +11,6 @@ export class LoginUsecase implements ILoginUsecase {
 
   async execute(user: LoginInfo): Promise<User> {
     const storedUser = await this.authRepository.getUser(user.username);
-
     if (storedUser === undefined) {
       throw new Error('Username or password is wrong!');
     }
