@@ -1,11 +1,12 @@
 import { Todo } from '../entities/todo.entity';
 import { ITodoRepository } from '../todo.repository.interface';
-import { CreateTodoUsecase } from './create-todo.usecase';
+import { CreateTodoUsecase, ICreateTodoUsecase } from './create-todo.usecase';
 
 const todoToCreate: Todo = {
   id: '123',
   body: 'This is new todo',
   status: false,
+  tag: 'this_is_tag',
   createdDate: new Date(Date.now()),
 };
 
@@ -21,7 +22,8 @@ class MockTodoRepository implements ITodoRepository {
       id: todo.id,
       body: todo.body,
       status: todo.status,
-      createdDate: new Date(Date.now()),
+      tag: todo.id,
+      createdDate: todo.createdDate,
     };
   }
   delete(id: string): Promise<void> {
@@ -34,7 +36,7 @@ class MockTodoRepository implements ITodoRepository {
 
 describe('Create todo usecase test', () => {
   let repository: ITodoRepository;
-  let usecase: CreateTodoUsecase;
+  let usecase: ICreateTodoUsecase;
 
   beforeEach(() => {
     repository = new MockTodoRepository();
@@ -48,7 +50,9 @@ describe('Create todo usecase test', () => {
 
     expect(createdTodo.id).toEqual(todoToCreate.id);
     expect(createdTodo.body).toEqual(todoToCreate.body);
+    expect(createdTodo.tag).toEqual(todoToCreate.tag);
     expect(createdTodo.status).toEqual(todoToCreate.status);
+    expect(createdTodo.createdDate).toEqual(todoToCreate.createdDate);
     
    });
 });

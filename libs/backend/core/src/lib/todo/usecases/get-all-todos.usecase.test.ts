@@ -1,4 +1,4 @@
-import { GetAllTodosUsecase } from './get-all-todos.usecase';
+import { GetAllTodosUsecase, IGetAllTodosUsecase } from './get-all-todos.usecase';
 import { ITodoRepository } from '../todo.repository.interface';
 import { Todo } from '../entities/todo.entity';
 
@@ -29,7 +29,7 @@ const todos: Todo[] = [
 
 class MockTodoRepository implements ITodoRepository {
   async getAll(): Promise<Todo[]> {
-    return await todos;
+    return todos;
   }
   getById(id: string): Promise<Todo> {
     throw new Error('Method not implemented.');
@@ -47,7 +47,7 @@ class MockTodoRepository implements ITodoRepository {
 
 describe('Gets all todos usecase test', () => {
   let repository: ITodoRepository;
-  let usecase: GetAllTodosUsecase;
+  let usecase: IGetAllTodosUsecase;
 
   beforeEach(() => {
     repository = new MockTodoRepository();
@@ -58,13 +58,15 @@ describe('Gets all todos usecase test', () => {
     const allTodos: Todo[] = await usecase.execute();
 
     expect(allTodos).toBeDefined;
-    
-    for (let index = 0; index < todos.length; index++) {
-        expect(allTodos[index].id).toBe(todos[index].id);
-        expect(allTodos[index].body).toBe(todos[index].body);
-        expect(allTodos[index].status).toBe(todos[index].status);
-        expect(allTodos[index].tag).toBe(todos[index].tag);
-    }
+    expect(Array.isArray(allTodos)).toBeTruthy;
 
+    expect(allTodos.length).toEqual(todos.length);
+
+    for (let index = 0; index < todos.length; index++) {
+      expect(allTodos[index].id).toBe(todos[index].id);
+      expect(allTodos[index].body).toBe(todos[index].body);
+      expect(allTodos[index].status).toBe(todos[index].status);
+      expect(allTodos[index].tag).toBe(todos[index].tag);
+    }
   });
 });
